@@ -1,0 +1,25 @@
+# =============================================================================
+# Project makefile
+# =============================================================================
+
+# Settings
+objs = video.obj rand.obj move.obj main.obj 
+dest = Tetris.exe
+
+# =============================================================================
+# Do NOT edit this section, unless you know what you are doing.
+# =============================================================================
+.asm.obj
+  tasm /ml /m2 /w2 /z /zi /p /jIDEAL $<
+
+$(dest): $(objs)
+  wlink option quiet system pmodew name $@ file {*.obj}
+
+clean: .symbolic
+  del *.obj
+  del $(dest)
+
+.silent
+debug: $(objs) .symbolic
+  wlink debug watcom lines option Q,C system pmodew name $(dest) file {*.obj}
+  wd /tr=rsi /li=43 $(dest)
